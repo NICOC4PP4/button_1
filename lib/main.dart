@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MaterialApp(
@@ -23,8 +25,20 @@ class _State extends State<MyApp> {
   int _value6 = 0;
   double _value7 = 20.0;
   double _value8 = 80.0;
+  String _value9 = "";
 
   //___________________________________________________________
+
+  // function to select the time
+  Future _selectDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime(2024),
+    );
+    if (picked != null) setState(() => _value9 = picked.toString());
+  }
 
   // functions for the range slider min=0 max=100 and interval goes from _value7 to _value8
   void _setValue7(double value) => setState(() => _value7 = value);
@@ -113,6 +127,7 @@ class _State extends State<MyApp> {
         child: Center(
           child: Column(
             children: <Widget>[
+              /*
               Text(_value.toString()),
               //button to add one to the value
               IconButton(
@@ -179,7 +194,13 @@ class _State extends State<MyApp> {
                   _value7.toString(),
                   _value8.toString(),
                 ),
-              )
+              ),
+              */
+              Text(_value9),
+              ElevatedButton(
+                onPressed: _selectDate,
+                child: const Text("Select Date"),
+              ),
 
               // add lines here
             ],
