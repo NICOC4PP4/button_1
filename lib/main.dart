@@ -24,7 +24,7 @@ class _State extends State<MyApp> {
 
   // functions for the radio buttons
   void _setValue5(int? value) => setState(() => _value5 = value!);
-  void _setValue6(int value) => setState(() => _value6 = value);
+  void _setValue6(int? value) => setState(() => _value6 = value!);
 
   // functions to change the value of the booleans
   void _value3Changed(bool? value) => setState(() => _value3 = value);
@@ -59,7 +59,7 @@ class _State extends State<MyApp> {
   // function implementing the radio list
   Widget makeRadios() {
     List<Widget> list = <Widget>[];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
       list.add(Radio(
         value: i,
         groupValue: _value5,
@@ -71,6 +71,28 @@ class _State extends State<MyApp> {
     );
     return column;
   }
+
+  // function implementing the radio list tiles
+  Widget makeRadioTiles() {
+    List<Widget> list = <Widget>[];
+    for (int i = 0; i < 2; i++) {
+      list.add(RadioListTile(
+        value: i,
+        groupValue: _value6,
+        onChanged: _setValue6,
+        activeColor: Colors.green,
+        controlAffinity: ListTileControlAffinity.trailing,
+        title: Text("Item: $i"),
+        subtitle: const Text("Subtitle"),
+      ));
+    }
+    Column column = Column(
+      children: list,
+    );
+    return column;
+  }
+
+  //___________________________________________________________
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +155,8 @@ class _State extends State<MyApp> {
                 overlayColor: MaterialStateProperty.all(Colors.purple),
                 selectedTileColor: Colors.orange,
               ),
-              makeRadios()
+              makeRadios(),
+              makeRadioTiles(),
               // add lines here
             ],
           ),
