@@ -14,15 +14,28 @@ class MyApp extends StatefulWidget {
 class _State extends State<MyApp> {
   int _value = 0;
   String click = 'Click me';
+  String _value2 = "";
 
-  // function to add one to the value
+  // functions to change the value of the text field
+  void _onChange(String value) {
+    setState(() {
+      _value2 = "Change: $value";
+    });
+  }
+
+  void _onSubmit(String value) {
+    setState(() {
+      _value2 = "Submit: $value";
+    });
+  }
+
+  // functions to add and substract one from the value
   void _add() {
     setState(() {
       _value++;
     });
   }
 
-  // function to subtract one from the value
   void _subtract() {
     setState(() {
       _value--;
@@ -59,6 +72,19 @@ class _State extends State<MyApp> {
                     _value = 0;
                   });
                 },
+              ),
+              Text(_value2),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Hello",
+                  hintText: "Hint",
+                  icon: Icon(Icons.people),
+                ),
+                autocorrect: true,
+                autofocus: true,
+                keyboardType: TextInputType.text,
+                onChanged: _onChange,
+                onSubmitted: _onSubmit,
               ),
             ],
           ),
