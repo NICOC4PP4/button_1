@@ -21,6 +21,14 @@ class _State extends State<MyApp> {
   bool _value4 = false;
   int _value5 = 0;
   int _value6 = 0;
+  double _value7 = 20.0;
+  double _value8 = 80.0;
+
+  //___________________________________________________________
+
+  // functions for the range slider min=0 max=100 and interval goes from _value7 to _value8
+  void _setValue7(double value) => setState(() => _value7 = value);
+  void _setValue8(double value) => setState(() => _value8 = value);
 
   // functions for the radio buttons
   void _setValue5(int? value) => setState(() => _value5 = value!);
@@ -157,6 +165,22 @@ class _State extends State<MyApp> {
               ),
               makeRadios(),
               makeRadioTiles(),
+              //functions for the range slider interval goes from _value7 to _value8, min=0 max=100
+              RangeSlider(
+                values: RangeValues(_value7, _value8),
+                onChanged: (RangeValues values) {
+                  _setValue7(values.start);
+                  _setValue8(values.end);
+                },
+                min: 0.0,
+                max: 100.0,
+                divisions: 100,
+                labels: RangeLabels(
+                  _value7.toString(),
+                  _value8.toString(),
+                ),
+              )
+
               // add lines here
             ],
           ),
