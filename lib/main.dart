@@ -13,17 +13,15 @@ class MyApp extends StatefulWidget {
   _State createState() => _State();
 }
 
+int _value = 0;
+String click = 'Click me';
+String _value2 = "";
+bool? _value3 = false;
+bool _value4 = false;
+int _value5 = 0;
+int _value6 = 0;
+
 class _State extends State<MyApp> {
-  int _value = 0;
-  String click = 'Click me';
-  String _value2 = "";
-  bool? _value3 = false;
-  bool _value4 = false;
-  int _value5 = 0;
-  int _value6 = 0;
-
-  //___________________________________________________________
-
   // functions for the radio buttons
   void _setValue5(int? value) => setState(() => _value5 = value!);
   void _setValue6(int? value) => setState(() => _value6 = value!);
