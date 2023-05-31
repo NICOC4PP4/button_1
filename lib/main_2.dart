@@ -14,12 +14,15 @@ class MyApp extends StatefulWidget {
   _State createState() => _State();
 }
 
-enum Animals { cat, dog, bird, lizard, fish }
-
 double _value1 = 20.0;
 double _value2 = 80.0;
 String _value3 = "";
 int _value4 = 0;
+int _index = 0;
+String _value = "";
+
+// set the enum string to 3 animals
+enum Animals { cat, dog, bird }
 
 class _State extends State<MyApp> {
   // function to select the time
@@ -50,9 +53,6 @@ class _State extends State<MyApp> {
     });
   }
 
-  int _index = 0;
-  String _value = "";
-
   List<BottomNavigationBarItem> _items = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
       icon: Icon(Icons.home),
@@ -67,6 +67,50 @@ class _State extends State<MyApp> {
       label: "School",
     ),
   ];
+
+  // function implementing the choose list
+  void setValue(String value) => setState(() => _value = value);
+
+  Future _askUser() async {
+    switch (await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text("What is your favorite animal?"),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, Animals.cat);
+              },
+              child: const Text("cat"),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, Animals.dog);
+              },
+              child: const Text("dog"),
+            ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, Animals.bird);
+              },
+              child: const Text("bird"),
+            ),
+          ],
+        );
+      },
+    )) {
+      case Animals.cat:
+        setValue("cat");
+        break;
+      case Animals.dog:
+        setValue("dog");
+        break;
+      case Animals.bird:
+        setValue("bird");
+        break;
+    }
+  }
 
   //___________________________________________________________
 
@@ -187,6 +231,15 @@ class _State extends State<MyApp> {
               // display the value of the bottom navigation bar
               Text(_value),
               // add lines here
+              const Divider(
+                height: 10.0,
+                color: Colors.black,
+              ),
+              // make the button that calls the choose list
+              ElevatedButton(
+                onPressed: _askUser,
+                child: const Text("Click Me"),
+              ),
             ],
           ),
         ),
