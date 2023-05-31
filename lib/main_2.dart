@@ -14,14 +14,14 @@ class MyApp extends StatefulWidget {
   _State createState() => _State();
 }
 
+enum Animals { cat, dog, bird, lizard, fish }
+
+double _value1 = 20.0;
+double _value2 = 80.0;
+String _value3 = "";
+int _value4 = 0;
+
 class _State extends State<MyApp> {
-  double _value1 = 20.0;
-  double _value2 = 80.0;
-  String _value3 = "";
-  int _value4 = 0;
-
-  //___________________________________________________________
-
   // function to select the time
   Future _selectDate() async {
     DateTime? picked = await showDatePicker(
@@ -50,11 +50,99 @@ class _State extends State<MyApp> {
     });
   }
 
+  int _index = 0;
+  String _value = "";
+
+  List<BottomNavigationBarItem> _items = const <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: "Home",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.business),
+      label: "Business",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.school),
+      label: "School",
+    ),
+  ];
+
   //___________________________________________________________
+
+  @override
+  void initState() {
+    super.initState();
+    _value3 = DateTime.now().toString();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // make a drawer here
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                "Drawer Header",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            // button that closes the drawer
+            ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Close Drawer")),
+            ListTile(
+              title: const Text("Item 1"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("Item 2"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("Item 3"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+
+      // make bottom navigation bar here
+      bottomNavigationBar: BottomNavigationBar(
+        items: _items,
+        currentIndex: _index,
+        fixedColor: Colors.blue,
+        onTap: (int item) {
+          setState(() {
+            _index = item;
+            _value = "Current value is: ${_index.toString()}";
+          });
+        },
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _value4 = 0;
+          });
+        },
+        child: const Icon(Icons.exposure_zero),
+      ),
+
       appBar: AppBar(
         title: const Text("Testing"),
         backgroundColor: Colors.red,
@@ -69,6 +157,7 @@ class _State extends State<MyApp> {
           ),
         ],
       ),
+
       body: Container(
         padding: const EdgeInsets.all(32.0),
         child: Center(
@@ -89,13 +178,14 @@ class _State extends State<MyApp> {
                   _value2.round().toString(),
                 ),
               ),
-              Text(_value3),
+              Text(_value3), // text to show the date
               ElevatedButton(
                 onPressed: _selectDate,
                 child: const Text("Select Date"),
               ),
               Text(_value4.toString()), //text to show the value of the counter
-
+              // display the value of the bottom navigation bar
+              Text(_value),
               // add lines here
             ],
           ),
