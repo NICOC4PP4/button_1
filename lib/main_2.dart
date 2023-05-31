@@ -18,6 +18,7 @@ class _State extends State<MyApp> {
   double _value1 = 20.0;
   double _value2 = 80.0;
   String _value3 = "";
+  int _value4 = 0;
 
   //___________________________________________________________
 
@@ -36,13 +37,37 @@ class _State extends State<MyApp> {
   void _setValue7(double value) => setState(() => _value1 = value);
   void _setValue8(double value) => setState(() => _value2 = value);
 
+  // functions to add and substract one from the value
+  void _add() {
+    setState(() {
+      _value4++;
+    });
+  }
+
+  void _subtract() {
+    setState(() {
+      _value4--;
+    });
+  }
+
   //___________________________________________________________
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hola"),
+        title: const Text("Testing"),
+        backgroundColor: Colors.red,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _add,
+          ),
+          IconButton(
+            icon: const Icon(Icons.remove),
+            onPressed: _subtract,
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(32.0),
@@ -60,8 +85,8 @@ class _State extends State<MyApp> {
                 max: 100.0,
                 divisions: 100,
                 labels: RangeLabels(
-                  _value1.toString(),
-                  _value2.toString(),
+                  _value1.round().toString(),
+                  _value2.round().toString(),
                 ),
               ),
               Text(_value3),
@@ -69,6 +94,7 @@ class _State extends State<MyApp> {
                 onPressed: _selectDate,
                 child: const Text("Select Date"),
               ),
+              Text(_value4.toString()), //text to show the value of the counter
 
               // add lines here
             ],
